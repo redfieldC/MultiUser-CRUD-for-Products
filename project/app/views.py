@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import get_object_or_404, render,redirect
 from django.contrib.auth import login, logout, authenticate
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
@@ -61,3 +61,17 @@ def user_logout(request):
 @login_required
 def home(request):
     return render(request,'registration/home.html')
+
+
+@login_required
+def edit_user(request, user_id):
+    user = get_object_or_404(CustomUser, id=user_id)
+    if request.method == 'POST':
+        user.first_name = request.POST['first_name']
+        user.middle_name = request.POST['middle_name']
+        user.last_name = request.POST['last_name']
+        user.save()
+        messages.success(request, 'User updated successfully.')
+        return redirect('home')
+
+    return render(request, 'registration/edit_user.html', {'user': user})

@@ -20,6 +20,9 @@
                 <a href="{% url 'logout' %}">
                     <button class="btn btn-danger">Logout</button>
                 </a>
+                <a href="{% url 'edit_user' user_id=request.user.id %}">
+                    <button class="btn btn-secondary">Edit User Profile</button>
+                </a>
             </div>
         </div>
     </div>
